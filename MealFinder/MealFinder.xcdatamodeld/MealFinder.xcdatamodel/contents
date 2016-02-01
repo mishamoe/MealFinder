@@ -7,18 +7,23 @@
     <entity name="Meal" representedClassName=".Meal" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="price" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="section" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="weight" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <relationship name="ingredients" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Ingredient" inverseName="meals" inverseEntity="Ingredient" syncable="YES"/>
-        <relationship name="menu" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Menu" inverseName="meals" inverseEntity="Menu" syncable="YES"/>
+        <relationship name="section" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Section" inverseName="meals" inverseEntity="Section" syncable="YES"/>
     </entity>
     <entity name="Menu" representedClassName=".Menu" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="meals" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Meal" inverseName="menu" inverseEntity="Meal" syncable="YES"/>
+        <relationship name="sections" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Section" inverseName="menu" inverseEntity="Section" syncable="YES"/>
+    </entity>
+    <entity name="Section" representedClassName=".Section" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="meals" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Meal" inverseName="section" inverseEntity="Meal" syncable="YES"/>
+        <relationship name="menu" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Menu" inverseName="sections" inverseEntity="Menu" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Ingredient" positionX="162" positionY="243" width="128" height="73"/>
-        <element name="Meal" positionX="-63" positionY="98" width="128" height="133"/>
-        <element name="Menu" positionX="-270" positionY="189" width="128" height="73"/>
+        <element name="Ingredient" positionX="234" positionY="36" width="128" height="73"/>
+        <element name="Meal" positionX="16" positionY="-54" width="128" height="118"/>
+        <element name="Menu" positionX="-344" positionY="-9" width="128" height="73"/>
+        <element name="Section" positionX="-171" positionY="-52" width="128" height="88"/>
     </elements>
 </model>

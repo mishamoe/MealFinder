@@ -22,6 +22,9 @@ class MealsListTableViewController: UITableViewController, NSFetchedResultsContr
         
         self.navigationItem.title = menu.name
         
+        // Uncomment the following line to preserve selection between presentations
+        self.clearsSelectionOnViewWillAppear = false
+        
         appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
         initializeFetchedResultsController()
@@ -30,13 +33,13 @@ class MealsListTableViewController: UITableViewController, NSFetchedResultsContr
     func initializeFetchedResultsController() {
         let request = NSFetchRequest(entityName: "Meal")
         
-        let sectionSort = NSSortDescriptor(key: "section", ascending: true)
+        let sectionSort = NSSortDescriptor(key: "section.name", ascending: true)
         let nameSort = NSSortDescriptor(key: "name", ascending: true)
         request.sortDescriptors = [sectionSort, nameSort]
         
-//        request.predicate = NSPredicate(format: "menu.name = %@", menu.name!)
+        request.predicate = NSPredicate(format: "section.menu.name = %@", menu.name!)
         
-        self.fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: appDelegate.managedObjectContext, sectionNameKeyPath: "section", cacheName: nil)
+        self.fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: appDelegate.managedObjectContext, sectionNameKeyPath: "section.name", cacheName: nil)
         self.fetchedResultsController.delegate = self
         
         do {

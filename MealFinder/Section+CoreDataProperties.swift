@@ -1,5 +1,5 @@
 //
-//  Ingredient+CoreDataProperties.swift
+//  Section+CoreDataProperties.swift
 //  MealFinder
 //
 //  Created by Михаил on 01.02.16.
@@ -12,7 +12,7 @@
 import Foundation
 import CoreData
 
-extension Ingredient {
+extension Section {
 
     @NSManaged var name: String?
     @NSManaged var meals: NSSet?

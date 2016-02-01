@@ -2,7 +2,7 @@
 //  Ingredient.swift
 //  MealFinder
 //
-//  Created by Михаил on 26.01.16.
+//  Created by Михаил on 01.02.16.
 //  Copyright © 2016 Михаил. All rights reserved.
 //
 

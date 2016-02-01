@@ -14,11 +14,12 @@ class MealTableViewController: UITableViewController, UITextFieldDelegate {
     // MARK: - Properties
     
     var appDelegate: AppDelegate!
-    var menu: Menu!
     var meal: Meal!
+    var menu: Menu!
+    var section: Section?
     
     @IBOutlet weak var nameTextField: UITextField!
-    @IBOutlet weak var sectionTextField: UITextField!
+    @IBOutlet weak var sectionTableViewCell: UITableViewCell!
     @IBOutlet weak var priceTextField: UITextField!
     @IBOutlet weak var weightTextField: UITextField!
     @IBOutlet weak var saveButton: UIBarButtonItem!
@@ -34,7 +35,7 @@ class MealTableViewController: UITableViewController, UITextFieldDelegate {
         // Set up views if editing an existing Menu.
         if let meal = self.meal {
             nameTextField.text = meal.name
-            sectionTextField.text = meal.section
+
             priceTextField.text = String(meal.price!)
             weightTextField.text = String(meal.weight!)
             
@@ -45,6 +46,14 @@ class MealTableViewController: UITableViewController, UITextFieldDelegate {
 //        checkValidMenuName()
         
         
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let section = self.section {
+            sectionTableViewCell.textLabel?.text = section.name
+        }
     }
     
     // MARK: - Actions
@@ -62,6 +71,10 @@ class MealTableViewController: UITableViewController, UITextFieldDelegate {
         }
     }
     
+    @IBAction func unwindToMeal(sender: UIStoryboardSegue) {
+        
+    }
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -76,11 +89,16 @@ class MealTableViewController: UITableViewController, UITextFieldDelegate {
             }
             
             meal.name = nameTextField.text
-            meal.section = sectionTextField.text
+
             meal.price = NSNumber(float: Float(priceTextField.text!)!)
             meal.weight = NSNumber(float: Float(weightTextField.text!)!)
             
             appDelegate.saveContext()
+        } else {
+            if segue.identifier == "SelectMealSection" {
+                let destination = segue.destinationViewController as! SectionTableViewController
+                destination.menu = menu
+            }
         }
     }
 

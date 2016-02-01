@@ -1,5 +1,5 @@
 //
-//  Meal.swift
+//  Section.swift
 //  MealFinder
 //
 //  Created by Михаил on 01.02.16.
@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 
-class Meal: NSManagedObject {
+class Section: NSManagedObject {
 
 // Insert code here to add functionality to your managed object subclass
 
