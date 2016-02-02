@@ -78,6 +78,7 @@ class MealsListTableViewController: UITableViewController, NSFetchedResultsContr
             
             let editMealController = storyboard.instantiateViewControllerWithIdentifier("MealTableViewController") as! MealTableViewController
             editMealController.meal = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Meal
+            editMealController.menu = self.menu
             
             let navigationController = UINavigationController(rootViewController: editMealController)
             

@@ -53,21 +53,21 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="detailButton" indentationWidth="10" reuseIdentifier="MealTableViewCell" rowHeight="70" id="9O6-zK-CJT" customClass="MealTableViewCell" customModule="MealFinder" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MealTableViewCell" rowHeight="70" id="9O6-zK-CJT" customClass="MealTableViewCell" customModule="MealFinder" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="92" width="600" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9O6-zK-CJT" id="T5I-In-jTQ">
-                                    <rect key="frame" x="0.0" y="0.0" width="553" height="69.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="69.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Price" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L9B-cL-jBm">
-                                            <rect key="frame" x="506" y="8" width="39" height="23"/>
+                                            <rect key="frame" x="545" y="8" width="39" height="23"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weight" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jeQ-QD-frB">
-                                            <rect key="frame" x="491" y="39" width="54" height="23"/>
+                                            <rect key="frame" x="530" y="39" width="54" height="23"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -86,8 +86,8 @@
                                         <constraint firstItem="jeQ-QD-frB" firstAttribute="bottom" secondItem="T5I-In-jTQ" secondAttribute="bottomMargin" id="ens-pT-rRw"/>
                                         <constraint firstItem="rd9-C8-5N9" firstAttribute="leading" secondItem="T5I-In-jTQ" secondAttribute="leadingMargin" constant="8" id="wf9-cc-HDt"/>
                                         <constraint firstItem="L9B-cL-jBm" firstAttribute="top" secondItem="T5I-In-jTQ" secondAttribute="topMargin" id="wl2-1X-IoK"/>
-                                        <constraint firstItem="L9B-cL-jBm" firstAttribute="trailing" secondItem="T5I-In-jTQ" secondAttribute="trailingMargin" id="x7O-gm-6LP"/>
-                                        <constraint firstItem="jeQ-QD-frB" firstAttribute="trailing" secondItem="T5I-In-jTQ" secondAttribute="trailingMargin" id="zge-fB-n3n"/>
+                                        <constraint firstItem="L9B-cL-jBm" firstAttribute="trailing" secondItem="T5I-In-jTQ" secondAttribute="trailingMargin" constant="-8" id="x7O-gm-6LP"/>
+                                        <constraint firstItem="jeQ-QD-frB" firstAttribute="trailing" secondItem="T5I-In-jTQ" secondAttribute="trailingMargin" constant="-8" id="zge-fB-n3n"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
