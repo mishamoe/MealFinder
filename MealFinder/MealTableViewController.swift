@@ -98,6 +98,8 @@ class MealTableViewController: UITableViewController, UITextFieldDelegate {
             if segue.identifier == "SelectMealSection" {
                 let destination = segue.destinationViewController as! SectionTableViewController
                 destination.menu = menu
+                destination.section = section
+                print("SelectMealSection segue")
             }
         }
     }

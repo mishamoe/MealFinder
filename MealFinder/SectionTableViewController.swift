@@ -15,60 +15,28 @@ class SectionTableViewController: UITableViewController, NSFetchedResultsControl
     var fetchedResultsController: NSFetchedResultsController!
     
     var menu: Menu!
+    var section: Section?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
-        // Uncomment the following line to preserve selection between presentations
-        self.clearsSelectionOnViewWillAppear = false
-        
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addSection")
         
         initializeFetchedResultsController()
+        
+        // Uncomment the following line to preserve selection between presentations
+        self.clearsSelectionOnViewWillAppear = false
     }
     
-    func addSection() {
-        let alert = UIAlertController(title: "Add Section", message: "Enter name of a new section", preferredStyle: .Alert)
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         
-        // Text field.
-        alert.addTextFieldWithConfigurationHandler { (textField: UITextField) -> Void in
-            textField.placeholder = "Section name"
-        }
-        
-        // Actions.
-        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "Save", style: .Default, handler: { (action: UIAlertAction) -> Void in
-            let textField = alert.textFields![0]
-            
-            if textField.text?.characters.count > 0 {
-                let section = NSEntityDescription.insertNewObjectForEntityForName("Section", inManagedObjectContext:             self.appDelegate.managedObjectContext) as! Section
-                section.name = textField.text
-                
-                self.appDelegate.saveContext()
-            }
-        }))
-        
-        presentViewController(alert, animated: true, completion: nil)
-    }
-    
-    func initializeFetchedResultsController() {
-        let request = NSFetchRequest(entityName: "Section")
-        
-//        request.predicate = NSPredicate(format: "menu.name", menu.name!)
-        
-        let sectionSort = NSSortDescriptor(key: "name", ascending: true)
-        request.sortDescriptors = [sectionSort]
-        
-        self.fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: appDelegate.managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
-        self.fetchedResultsController.delegate = self
-        
-        do {
-            try self.fetchedResultsController.performFetch()
-        }
-        catch {
-            fatalError("Failed to initialize FetchedResultsController \(error)")
+        if let section = self.section {
+            let indexPath = fetchedResultsController.indexPathForObject(section)!
+            // Change accessoryType of selected sections' row to checkmark
+            tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = UITableViewCellAccessoryType.Checkmark
         }
     }
 
@@ -103,64 +71,45 @@ class SectionTableViewController: UITableViewController, NSFetchedResultsControl
     }
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        // Change accessoryType of selected row to checkmark
-        tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = UITableViewCellAccessoryType.Checkmark
-        
         // Set section property of MealTableViewController to selected section entity
         let mealTableViewController = self.navigationController?.viewControllers.first as! MealTableViewController
-        let section = fetchedResultsController.objectAtIndexPath(indexPath) as! Section
+        self.section = fetchedResultsController.objectAtIndexPath(indexPath) as? Section
         mealTableViewController.section = section
         
         // Remove current view controler from navigation stack.
         navigationController?.popViewControllerAnimated(true)
     }
 
-    /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
         return true
     }
-    */
+    
+    override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        let editAction = UITableViewRowAction(style: .Default, title: "Edit") { (action, indexPath) -> Void in
+            self.editSection(indexPath)
+        }
+        editAction.backgroundColor = UIColor.grayColor()
+        
+        let deleteAction = UITableViewRowAction(style: .Default, title: "Delete") { (action, indexPath) -> Void in
+            self.tableView(self.tableView, commitEditingStyle: .Delete, forRowAtIndexPath: indexPath)
+        }
+        deleteAction.backgroundColor = UIColor.redColor()
+        
+        return [deleteAction, editAction]
+    }
 
-    /*
     // Override to support editing the table view.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-        print("Hello")
+            // Delete object from context            
+            let section = fetchedResultsController.objectAtIndexPath(indexPath) as! Section
+            appDelegate.managedObjectContext.deleteObject(section)
+            appDelegate.saveContext()
+        }
     }
 
-    
     // MARK: - NSFetchedResultsControllerDelegate
     
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
@@ -175,8 +124,8 @@ class SectionTableViewController: UITableViewController, NSFetchedResultsControl
         case .Delete:
             self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
         case .Update:
-            let cell = self.tableView.cellForRowAtIndexPath(indexPath!) as! MealTableViewCell
-            self.configureCell(cell, indexPath: indexPath!)
+            let cell = self.tableView.cellForRowAtIndexPath(indexPath!)
+            self.configureCell(cell!, indexPath: indexPath!)
         case .Move:
             self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
             self.tableView.insertRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
@@ -185,5 +134,77 @@ class SectionTableViewController: UITableViewController, NSFetchedResultsControl
     
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
         self.tableView.endUpdates()
+    }
+    
+    // MARK: - Methods
+    
+    func initializeFetchedResultsController() {
+        let request = NSFetchRequest(entityName: "Section")
+        
+        //        request.predicate = NSPredicate(format: "menu.name", menu.name!)
+        
+        let sectionSort = NSSortDescriptor(key: "name", ascending: true)
+        request.sortDescriptors = [sectionSort]
+        
+        self.fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: appDelegate.managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
+        self.fetchedResultsController.delegate = self
+        
+        do {
+            try self.fetchedResultsController.performFetch()
+        }
+        catch {
+            fatalError("Failed to initialize FetchedResultsController \(error)")
+        }
+    }
+    
+    func addSection() {
+        let alert = UIAlertController(title: "Add Section", message: "Enter name of a new section", preferredStyle: .Alert)
+        
+        // Text field.
+        alert.addTextFieldWithConfigurationHandler { (textField: UITextField) -> Void in
+            textField.placeholder = "Section name"
+            textField.clearButtonMode = .WhileEditing
+        }
+        
+        // Actions.
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Save", style: .Default, handler: { (action: UIAlertAction) -> Void in
+            let textField = alert.textFields![0]
+            
+            if textField.text?.characters.count > 0 {
+                let section = NSEntityDescription.insertNewObjectForEntityForName("Section", inManagedObjectContext:             self.appDelegate.managedObjectContext) as! Section
+                section.name = textField.text
+                
+                self.appDelegate.saveContext()
+            }
+        }))
+        
+        presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func editSection(indexPath: NSIndexPath) {
+        let section = fetchedResultsController.objectAtIndexPath(indexPath) as! Section
+        
+        let alert = UIAlertController(title: "Edit Section", message: "Enter section name", preferredStyle: .Alert)
+        
+        // Text field.
+        alert.addTextFieldWithConfigurationHandler { (textField: UITextField) -> Void in
+            textField.clearButtonMode = .WhileEditing
+            textField.placeholder = "Section name"
+            textField.text = section.name
+        }
+        
+        // Actions.
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Save", style: .Default, handler: { (action: UIAlertAction) -> Void in
+            let textField = alert.textFields![0]
+            
+            if textField.text?.characters.count > 0 {
+                section.name = textField.text
+                self.appDelegate.saveContext()
+            }
+        }))
+        
+        presentViewController(alert, animated: true, completion: nil)
     }
 }
