@@ -29,26 +29,6 @@ class MealsListTableViewController: UITableViewController, NSFetchedResultsContr
         
         initializeFetchedResultsController()
     }
-    
-    func initializeFetchedResultsController() {
-        let request = NSFetchRequest(entityName: "Meal")
-        
-        let sectionSort = NSSortDescriptor(key: "section.name", ascending: true)
-        let nameSort = NSSortDescriptor(key: "name", ascending: true)
-        request.sortDescriptors = [sectionSort, nameSort]
-        
-        request.predicate = NSPredicate(format: "section.menu.name = %@", menu.name!)
-        
-        self.fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: appDelegate.managedObjectContext, sectionNameKeyPath: "section.name", cacheName: nil)
-        self.fetchedResultsController.delegate = self
-        
-        do {
-            try self.fetchedResultsController.performFetch()
-        }
-        catch {
-            fatalError("Failed to initialize FetchedResultsController \(error)")
-        }
-    }
 
     // MARK: - Table view data source
 
@@ -103,7 +83,7 @@ class MealsListTableViewController: UITableViewController, NSFetchedResultsContr
             
             self.presentViewController(navigationController, animated: true, completion: nil)
         }
-        editAction.backgroundColor = UIColor.blueColor()
+        editAction.backgroundColor = UIColor.grayColor()
         
         let deleteAction = UITableViewRowAction(style: .Default, title: "Delete") { (action, indexPath) -> Void in
             self.tableView(self.tableView, commitEditingStyle: .Delete, forRowAtIndexPath: indexPath)
@@ -191,4 +171,25 @@ class MealsListTableViewController: UITableViewController, NSFetchedResultsContr
         self.tableView.endUpdates()
     }
     
+    // MARK: - Methods
+    
+    func initializeFetchedResultsController() {
+        let request = NSFetchRequest(entityName: "Meal")
+        
+        let sectionSort = NSSortDescriptor(key: "section.name", ascending: true)
+        let nameSort = NSSortDescriptor(key: "name", ascending: true)
+        request.sortDescriptors = [sectionSort, nameSort]
+        
+        request.predicate = NSPredicate(format: "section.menu.name = %@", menu.name!)
+        
+        self.fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: appDelegate.managedObjectContext, sectionNameKeyPath: "section.name", cacheName: nil)
+        self.fetchedResultsController.delegate = self
+        
+        do {
+            try self.fetchedResultsController.performFetch()
+        }
+        catch {
+            fatalError("Failed to initialize FetchedResultsController \(error)")
+        }
+    }
 }

@@ -141,10 +141,10 @@ class SectionTableViewController: UITableViewController, NSFetchedResultsControl
     func initializeFetchedResultsController() {
         let request = NSFetchRequest(entityName: "Section")
         
-        //        request.predicate = NSPredicate(format: "menu.name", menu.name!)
+        request.predicate = NSPredicate(format: "menu.name = %@", menu.name!)
         
-        let sectionSort = NSSortDescriptor(key: "name", ascending: true)
-        request.sortDescriptors = [sectionSort]
+        let sectionNameSort = NSSortDescriptor(key: "name", ascending: true)
+        request.sortDescriptors = [sectionNameSort]
         
         self.fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: appDelegate.managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
         self.fetchedResultsController.delegate = self
@@ -174,6 +174,7 @@ class SectionTableViewController: UITableViewController, NSFetchedResultsControl
             if textField.text?.characters.count > 0 {
                 let section = NSEntityDescription.insertNewObjectForEntityForName("Section", inManagedObjectContext:             self.appDelegate.managedObjectContext) as! Section
                 section.name = textField.text
+                section.menu = self.menu
                 
                 self.appDelegate.saveContext()
             }

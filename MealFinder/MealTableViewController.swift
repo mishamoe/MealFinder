@@ -34,12 +34,12 @@ class MealTableViewController: UITableViewController, UITextFieldDelegate {
         
         // Set up views if editing an existing Menu.
         if let meal = self.meal {
+            self.section = meal.section
+            navigationItem.title = meal.name
+            
             nameTextField.text = meal.name
-
             priceTextField.text = String(meal.price!)
             weightTextField.text = String(meal.weight!)
-            
-            navigationItem.title = meal.name
         }
         
         // Enable the Save button only if the text field has a valid Menu name.
@@ -85,11 +85,10 @@ class MealTableViewController: UITableViewController, UITextFieldDelegate {
         if sender === saveButton {
             if meal == nil {
                 meal = (NSEntityDescription.insertNewObjectForEntityForName("Meal", inManagedObjectContext: self.appDelegate.managedObjectContext) as! Meal)
-                meal.menu = menu
             }
             
             meal.name = nameTextField.text
-
+            meal.section = section
             meal.price = NSNumber(float: Float(priceTextField.text!)!)
             meal.weight = NSNumber(float: Float(weightTextField.text!)!)
             

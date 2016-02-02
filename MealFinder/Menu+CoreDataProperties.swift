@@ -2,7 +2,7 @@
 //  Menu+CoreDataProperties.swift
 //  MealFinder
 //
-//  Created by Михаил on 01.02.16.
+//  Created by Михаил on 02.02.16.
 //  Copyright © 2016 Михаил. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -15,6 +15,6 @@ import CoreData
 extension Menu {
 
     @NSManaged var name: String?
-    @NSManaged var meals: NSSet?
+    @NSManaged var sections: NSSet?
 
 }

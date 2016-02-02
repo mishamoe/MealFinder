@@ -2,7 +2,7 @@
 //  Meal+CoreDataProperties.swift
 //  MealFinder
 //
-//  Created by Михаил on 01.02.16.
+//  Created by Михаил on 02.02.16.
 //  Copyright © 2016 Михаил. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -18,7 +18,6 @@ extension Meal {
     @NSManaged var price: NSNumber?
     @NSManaged var weight: NSNumber?
     @NSManaged var ingredients: NSSet?
-    @NSManaged var menu: Menu?
     @NSManaged var section: Section?
 
 }

@@ -21,23 +21,6 @@ class MenuListTableViewController: UITableViewController, NSFetchedResultsContro
         
         initializeFetchedResultsController()
     }
-    
-    func initializeFetchedResultsController() {
-        let request = NSFetchRequest(entityName: "Menu")
-        
-        let nameSort = NSSortDescriptor(key: "name", ascending: true)
-        request.sortDescriptors = [nameSort]
-
-        self.fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: appDelegate.managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
-        self.fetchedResultsController.delegate = self
-        
-        do {
-            try self.fetchedResultsController.performFetch()
-        }
-        catch {
-            fatalError("Failed to initialize FetchedResultsController \(error)")
-        }
-    }
 
     // MARK: - Table view data source
 
@@ -78,9 +61,8 @@ class MenuListTableViewController: UITableViewController, NSFetchedResultsContro
             let navigationController = UINavigationController(rootViewController: editMenuController)
 
             self.presentViewController(navigationController, animated: true, completion: nil)
-//            self.navigationController?.pushViewController(editMenuController, animated: true)
         }
-        editAction.backgroundColor = UIColor.blueColor()
+        editAction.backgroundColor = UIColor.grayColor()
         
         let deleteAction = UITableViewRowAction(style: .Default, title: "Delete") { (action, indexPath) -> Void in
             self.tableView(self.tableView, commitEditingStyle: .Delete, forRowAtIndexPath: indexPath)
@@ -159,4 +141,22 @@ class MenuListTableViewController: UITableViewController, NSFetchedResultsContro
         self.tableView.endUpdates()
     }
 
+    // MARK: - Methods
+    
+    func initializeFetchedResultsController() {
+        let request = NSFetchRequest(entityName: "Menu")
+        
+        let nameSort = NSSortDescriptor(key: "name", ascending: true)
+        request.sortDescriptors = [nameSort]
+        
+        self.fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: appDelegate.managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
+        self.fetchedResultsController.delegate = self
+        
+        do {
+            try self.fetchedResultsController.performFetch()
+        }
+        catch {
+            fatalError("Failed to initialize FetchedResultsController \(error)")
+        }
+    }
 }
