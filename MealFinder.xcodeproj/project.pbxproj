@@ -19,6 +19,7 @@
 		8745BACE1C5F81530032F1B9 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8745BAC61C5F81530032F1B9 /* Menu.swift */; };
 		8745BACF1C5F81530032F1B9 /* Section+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8745BAC71C5F81530032F1B9 /* Section+CoreDataProperties.swift */; };
 		8745BAD01C5F81530032F1B9 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8745BAC81C5F81530032F1B9 /* Section.swift */; };
+		87669F871C620BE600FA536F /* IngredientsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87669F861C620BE600FA536F /* IngredientsTableViewController.swift */; };
 		8785DFEB1C579D570078F3D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8785DFEA1C579D570078F3D9 /* AppDelegate.swift */; };
 		8785DFF01C579D570078F3D9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8785DFEE1C579D570078F3D9 /* Main.storyboard */; };
 		8785DFF31C579D570078F3D9 /* MealFinder.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8785DFF11C579D570078F3D9 /* MealFinder.xcdatamodeld */; };
@@ -41,6 +42,7 @@
 		8745BAC61C5F81530032F1B9 /* Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		8745BAC71C5F81530032F1B9 /* Section+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Section+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		8745BAC81C5F81530032F1B9 /* Section.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
+		87669F861C620BE600FA536F /* IngredientsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IngredientsTableViewController.swift; sourceTree = "<group>"; };
 		8785DFE71C579D570078F3D9 /* MealFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MealFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8785DFEA1C579D570078F3D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8785DFEF1C579D570078F3D9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -78,6 +80,19 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
+		87669F881C620C0B00FA536F /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				8785E00D1C57A6990078F3D9 /* MenuListTableViewController.swift */,
+				8785E00B1C57A0300078F3D9 /* MenuTableViewController.swift */,
+				8731CF641C5A855800ACA972 /* MealsListTableViewController.swift */,
+				8731CF6D1C5A91D700ACA972 /* MealTableViewController.swift */,
+				8745BAA71C5F596B0032F1B9 /* SectionTableViewController.swift */,
+				87669F861C620BE600FA536F /* IngredientsTableViewController.swift */,
+			);
+			name = ViewController;
+			sourceTree = "<group>";
+		};
 		8785DFDE1C579D570078F3D9 = {
 			isa = PBXGroup;
 			children = (
@@ -98,13 +113,9 @@
 			isa = PBXGroup;
 			children = (
 				8731CF6C1C5A8F7400ACA972 /* Model */,
+				87669F881C620C0B00FA536F /* ViewController */,
 				8785DFEA1C579D570078F3D9 /* AppDelegate.swift */,
-				8785E00D1C57A6990078F3D9 /* MenuListTableViewController.swift */,
-				8785E00B1C57A0300078F3D9 /* MenuTableViewController.swift */,
-				8731CF641C5A855800ACA972 /* MealsListTableViewController.swift */,
 				8731CF661C5A887400ACA972 /* MealTableViewCell.swift */,
-				8731CF6D1C5A91D700ACA972 /* MealTableViewController.swift */,
-				8745BAA71C5F596B0032F1B9 /* SectionTableViewController.swift */,
 				8785DFEE1C579D570078F3D9 /* Main.storyboard */,
 				8785DFF11C579D570078F3D9 /* MealFinder.xcdatamodeld */,
 				8785DFF41C579D570078F3D9 /* Assets.xcassets */,
@@ -202,6 +213,7 @@
 				8745BAD01C5F81530032F1B9 /* Section.swift in Sources */,
 				8731CF6E1C5A91D700ACA972 /* MealTableViewController.swift in Sources */,
 				8731CF651C5A855800ACA972 /* MealsListTableViewController.swift in Sources */,
+				87669F871C620BE600FA536F /* IngredientsTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

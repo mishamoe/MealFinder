@@ -17,9 +17,11 @@ class MealTableViewController: UITableViewController, UITextFieldDelegate {
     var meal: Meal!
     var menu: Menu!
     var section: Section?
+    var ingredients: NSMutableSet!
     
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var sectionTableViewCell: UITableViewCell!
+    @IBOutlet weak var ingredientsTableViewCell: UITableViewCell!
     @IBOutlet weak var priceTextField: UITextField!
     @IBOutlet weak var weightTextField: UITextField!
     @IBOutlet weak var saveButton: UIBarButtonItem!
@@ -33,6 +35,7 @@ class MealTableViewController: UITableViewController, UITextFieldDelegate {
         nameTextField.delegate = self
         priceTextField.delegate = self
         weightTextField.delegate = self
+        
         // Change keyboard type for number values
         priceTextField.keyboardType = .NumbersAndPunctuation
         weightTextField.keyboardType = .NumbersAndPunctuation
@@ -40,17 +43,16 @@ class MealTableViewController: UITableViewController, UITextFieldDelegate {
         // Set up views if editing an existing Menu.
         if let meal = self.meal {
             self.section = meal.section
+            self.ingredients = NSMutableSet(set: meal.ingredients!)
             navigationItem.title = meal.name
             
             nameTextField.text = meal.name
             priceTextField.text = String(meal.price!)
             weightTextField.text = String(meal.weight!)
         }
-        
-        // Enable the Save button only if the text field has a valid Menu name.
-//        checkValidMenuName()
-        
-        
+        else {
+            ingredients = NSMutableSet()
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -59,6 +61,8 @@ class MealTableViewController: UITableViewController, UITextFieldDelegate {
         if let section = self.section {
             sectionTableViewCell.textLabel?.text = section.name
         }
+        
+        ingredientsTableViewCell.textLabel?.text = getIngredients()
     }
     
     // MARK: - Actions
@@ -116,6 +120,7 @@ class MealTableViewController: UITableViewController, UITextFieldDelegate {
             
             meal.name = nameTextField.text
             meal.section = section
+            meal.ingredients = ingredients
             meal.price = NSNumber(float: Float(priceTextField.text!)!)
             meal.weight = NSNumber(float: Float(weightTextField.text!)!)
             
@@ -126,6 +131,17 @@ class MealTableViewController: UITableViewController, UITextFieldDelegate {
                 let destination = segue.destinationViewController as! SectionTableViewController
                 destination.menu = menu
                 destination.section = section
+                
+                // Hide keyboard.
+                nameTextField.resignFirstResponder()
+                priceTextField.resignFirstResponder()
+                weightTextField.resignFirstResponder()
+                
+                print("SelectMealSection segue")
+            }
+            else if segue.identifier == "SelectMealIngredients" {
+                let destination = segue.destinationViewController as! IngredientsTableViewController
+                destination.ingredients = ingredients
                 
                 // Hide keyboard.
                 nameTextField.resignFirstResponder()
@@ -152,5 +168,26 @@ class MealTableViewController: UITableViewController, UITextFieldDelegate {
         }
         
         return true
+    }
+    
+    // MARK: - Methods
+    
+    func getIngredients() -> String {
+        let ingredientsArray = self.ingredients?.allObjects as! [Ingredient]
+        
+        guard ingredientsArray.count > 0 else {
+            return ""
+        }
+        
+        var ingredientsString = ""
+        
+        for ingredient in ingredientsArray {
+            ingredientsString += "\(ingredient.name!), "
+        }
+        
+        let index = ingredientsString.endIndex.advancedBy(-2)
+        
+        return ingredientsString.substringToIndex(index)
+        
     }
 }

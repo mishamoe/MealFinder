@@ -149,17 +149,32 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Section" id="NH0-Ye-hnF">
+                            <tableViewSection headerTitle="Section" id="4cH-xH-Dg4">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="BxW-ey-TN9">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SelectMealSection" id="RdP-oj-04Y">
                                         <rect key="frame" x="0.0" y="207.5" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="RdP-oj-04Y" id="wiu-i6-ryj">
+                                            <rect key="frame" x="0.0" y="0.0" width="567" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="ZoU-7z-L9j" kind="show" identifier="SelectMealSection" id="epr-yh-Dny"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Ingridients" id="NH0-Ye-hnF">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SelectMealIngredients" id="BxW-ey-TN9">
+                                        <rect key="frame" x="0.0" y="301.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BxW-ey-TN9" id="3hb-ao-jFQ">
                                             <rect key="frame" x="0.0" y="0.0" width="567" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="ZoU-7z-L9j" kind="show" identifier="SelectMealSection" id="Ecw-qF-ELX"/>
+                                            <segue destination="cyH-5Y-OSg" kind="show" identifier="SelectMealIngredients" id="RFH-TZ-IJ5"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -167,7 +182,7 @@
                             <tableViewSection headerTitle="Price" footerTitle="The price is measured in dollars" id="w5X-NP-xDo">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="pc4-ek-917">
-                                        <rect key="frame" x="0.0" y="301.5" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="395.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pc4-ek-917" id="HDP-sL-RBI">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
@@ -192,7 +207,7 @@
                             <tableViewSection headerTitle="Weight" footerTitle="The weight is measured in gramms" id="2gG-71-krw">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="4Q6-SH-KJ7">
-                                        <rect key="frame" x="0.0" y="412" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="506" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4Q6-SH-KJ7" id="DON-z2-Mjg">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
@@ -233,10 +248,11 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="ingredientsTableViewCell" destination="BxW-ey-TN9" id="db4-Xi-OLc"/>
                         <outlet property="nameTextField" destination="vBs-cc-l07" id="xBV-c4-MNK"/>
                         <outlet property="priceTextField" destination="bWl-6j-ife" id="wAO-l4-14k"/>
                         <outlet property="saveButton" destination="gz2-4C-jQe" id="d77-ET-QHW"/>
-                        <outlet property="sectionTableViewCell" destination="BxW-ey-TN9" id="R6Q-31-9h2"/>
+                        <outlet property="sectionTableViewCell" destination="RdP-oj-04Y" id="G0k-MW-Iya"/>
                         <outlet property="weightTextField" destination="XQe-ta-QV7" id="jJ9-mL-orz"/>
                     </connections>
                 </tableViewController>
@@ -271,7 +287,35 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pqb-Ub-CTW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2647" y="1830"/>
+            <point key="canvasLocation" x="1771" y="2670"/>
+        </scene>
+        <!--Ingredients Table View Controller-->
+        <scene sceneID="G82-XB-euZ">
+            <objects>
+                <tableViewController id="cyH-5Y-OSg" customClass="IngredientsTableViewController" customModule="MealFinder" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="9QZ-3k-b00">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="IngredientTableViewCell" id="2CS-fo-BJz">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2CS-fo-BJz" id="X16-N2-shc">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="cyH-5Y-OSg" id="Fq3-Hi-xE6"/>
+                            <outlet property="delegate" destination="cyH-5Y-OSg" id="h6b-sV-3CN"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jFM-ox-DBK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2484" y="2670"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="5SN-a2-HfY">

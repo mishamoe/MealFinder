@@ -1,28 +1,28 @@
 //
-//  MealSectionTableViewController.swift
+//  IngridientsTableViewController.swift
 //  MealFinder
 //
-//  Created by Михаил on 01.02.16.
+//  Created by Михаил on 03.02.16.
 //  Copyright © 2016 Михаил. All rights reserved.
 //
 
 import UIKit
 import CoreData
 
-class SectionTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
+class IngredientsTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
 
+    // MARK: - Properties
     var appDelegate: AppDelegate!
     var fetchedResultsController: NSFetchedResultsController!
     
-    var menu: Menu!
-    var section: Section?
+    var ingredients: NSMutableSet!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addSection")
+        appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addIngredient")
         
         initializeFetchedResultsController()
         
@@ -33,10 +33,20 @@ class SectionTableViewController: UITableViewController, NSFetchedResultsControl
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        if let section = self.section {
-            let indexPath = fetchedResultsController.indexPathForObject(section)!
-            // Change accessoryType of selected sections' row to checkmark
-            tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = UITableViewCellAccessoryType.Checkmark
+        if let ingredients = self.ingredients where ingredients.allObjects.count > 0 {
+            for ingridient in ingredients {
+                let indexPath = fetchedResultsController.indexPathForObject(ingridient)!
+                // Change accessoryType of selected sections' row to checkmark
+                tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = UITableViewCellAccessoryType.Checkmark
+            }
+        }
+    }
+
+    override func didMoveToParentViewController(parent: UIViewController?) {
+        if let parent = parent as? UINavigationController {
+            if let mealTableViewController = parent.viewControllers.first as? MealTableViewController {
+                mealTableViewController.ingredients = self.ingredients
+            }
         }
     }
 
@@ -60,39 +70,45 @@ class SectionTableViewController: UITableViewController, NSFetchedResultsControl
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("SectionTableViewCell", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("IngredientTableViewCell", forIndexPath: indexPath)
 
         // Configure the cell...
         configureCell(cell, indexPath: indexPath)
 
         return cell
     }
-    
+
     func configureCell(cell: UITableViewCell, indexPath: NSIndexPath) {
-        let section = fetchedResultsController.objectAtIndexPath(indexPath) as! Section
-
-        cell.textLabel?.text = section.name
+        let ingredient = fetchedResultsController.objectAtIndexPath(indexPath) as! Ingredient
+        cell.textLabel?.text = ingredient.name
     }
-
+    
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        // Set section property of MealTableViewController to selected section entity
-        let mealTableViewController = self.navigationController?.viewControllers.first as! MealTableViewController
-        self.section = fetchedResultsController.objectAtIndexPath(indexPath) as? Section
-        mealTableViewController.section = section
+        // Set accessoryType of selected cell to Checkmark
+        let cell = tableView.cellForRowAtIndexPath(indexPath)!
+        cell.accessoryType = .Checkmark
+        
+        // Add selected ingredient to ingredients set.
+        let ingredient = fetchedResultsController.objectAtIndexPath(indexPath) as! Ingredient
+        self.ingredients.addObject(ingredient)
         
         // Remove current view controler from navigation stack.
-        navigationController?.popViewControllerAnimated(true)
-    }
-
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+//        navigationController?.popViewControllerAnimated(true)
     }
     
+    override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+        // Set accessoryType of selected cell to None
+        let cell = tableView.cellForRowAtIndexPath(indexPath)!
+        cell.accessoryType = .None
+        
+        // Remove deselected ingredient from ingredients set.
+        let ingredient = fetchedResultsController.objectAtIndexPath(indexPath) as! Ingredient
+        self.ingredients.removeObject(ingredient)
+    }
+
     override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
         let editAction = UITableViewRowAction(style: .Default, title: "Edit") { (action, indexPath) -> Void in
-            self.editSection(indexPath)
+            self.editIngredient(indexPath)
         }
         editAction.backgroundColor = UIColor.grayColor()
         
@@ -103,17 +119,28 @@ class SectionTableViewController: UITableViewController, NSFetchedResultsControl
         
         return [deleteAction, editAction]
     }
-
+    
     // Override to support editing the table view.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
-            // Delete object from context            
-            let section = fetchedResultsController.objectAtIndexPath(indexPath) as! Section
-            appDelegate.managedObjectContext.deleteObject(section)
+            // Delete object from context
+            let ingredient = fetchedResultsController.objectAtIndexPath(indexPath) as! Ingredient
+            appDelegate.managedObjectContext.deleteObject(ingredient)
             appDelegate.saveContext()
         }
     }
 
+
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+        print("Segue Back")
+    }
+
+    
     // MARK: - NSFetchedResultsControllerDelegate
     
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
@@ -139,16 +166,14 @@ class SectionTableViewController: UITableViewController, NSFetchedResultsControl
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
         self.tableView.endUpdates()
     }
-    
+
     // MARK: - Methods
     
     func initializeFetchedResultsController() {
-        let request = NSFetchRequest(entityName: "Section")
+        let request = NSFetchRequest(entityName: "Ingredient")
         
-        request.predicate = NSPredicate(format: "menu.name = %@", menu.name!)
-        
-        let sectionNameSort = NSSortDescriptor(key: "name", ascending: true)
-        request.sortDescriptors = [sectionNameSort]
+        let ingredientNameSort = NSSortDescriptor(key: "name", ascending: true)
+        request.sortDescriptors = [ingredientNameSort]
         
         self.fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: appDelegate.managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
         self.fetchedResultsController.delegate = self
@@ -161,14 +186,14 @@ class SectionTableViewController: UITableViewController, NSFetchedResultsControl
         }
     }
     
-    func addSection() {
-        let alert = UIAlertController(title: "Add Section", message: "Enter name of a new section", preferredStyle: .Alert)
+    func addIngredient() {
+        let alert = UIAlertController(title: "Add Ingredient", message: "Enter name of a new ingredient", preferredStyle: .Alert)
         
         // Text field.
         alert.addTextFieldWithConfigurationHandler { (textField: UITextField) -> Void in
             textField.clearButtonMode = .WhileEditing
             textField.autocapitalizationType = .Sentences
-            textField.placeholder = "Section name"
+            textField.placeholder = "Ingredient name"
         }
         
         // Actions.
@@ -177,9 +202,8 @@ class SectionTableViewController: UITableViewController, NSFetchedResultsControl
             let textField = alert.textFields![0]
             
             if textField.text?.characters.count > 0 {
-                let section = NSEntityDescription.insertNewObjectForEntityForName("Section", inManagedObjectContext:             self.appDelegate.managedObjectContext) as! Section
-                section.name = textField.text
-                section.menu = self.menu
+                let ingredient = NSEntityDescription.insertNewObjectForEntityForName("Ingredient", inManagedObjectContext:             self.appDelegate.managedObjectContext) as! Ingredient
+                ingredient.name = textField.text
                 
                 self.appDelegate.saveContext()
             }
@@ -188,17 +212,17 @@ class SectionTableViewController: UITableViewController, NSFetchedResultsControl
         presentViewController(alert, animated: true, completion: nil)
     }
     
-    func editSection(indexPath: NSIndexPath) {
-        let section = fetchedResultsController.objectAtIndexPath(indexPath) as! Section
+    func editIngredient(indexPath: NSIndexPath) {
+        let ingredient = fetchedResultsController.objectAtIndexPath(indexPath) as! Ingredient
         
-        let alert = UIAlertController(title: "Edit Section", message: "Enter section name", preferredStyle: .Alert)
+        let alert = UIAlertController(title: "Edit Ingredient", message: "Enter ingredient name", preferredStyle: .Alert)
         
         // Text field.
         alert.addTextFieldWithConfigurationHandler { (textField: UITextField) -> Void in
             textField.clearButtonMode = .WhileEditing
             textField.autocapitalizationType = .Sentences
-            textField.placeholder = "Section name"
-            textField.text = section.name
+            textField.placeholder = "Ingredient name"
+            textField.text = ingredient.name
             
         }
         
@@ -208,7 +232,7 @@ class SectionTableViewController: UITableViewController, NSFetchedResultsControl
             let textField = alert.textFields![0]
             
             if textField.text?.characters.count > 0 {
-                section.name = textField.text
+                ingredient.name = textField.text
                 self.appDelegate.saveContext()
             }
         }))
