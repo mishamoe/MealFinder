@@ -31,6 +31,8 @@ class MealTableViewController: UITableViewController, UITextFieldDelegate {
         
         // Handle text field's user input through delegate's callback.
         nameTextField.delegate = self
+        priceTextField.delegate = self
+        weightTextField.delegate = self
         
         // Set up views if editing an existing Menu.
         if let meal = self.meal {
@@ -103,4 +105,20 @@ class MealTableViewController: UITableViewController, UITextFieldDelegate {
         }
     }
 
+    // MARK: - UITextFieldDelegate
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        if textField == self.nameTextField {
+            priceTextField.becomeFirstResponder()
+        }
+        else if textField == self.priceTextField {
+            weightTextField.becomeFirstResponder()
+        }
+        else if textField == self.weightTextField {
+            // Hide keyboard.
+            weightTextField.resignFirstResponder()
+        }
+        
+        return true
+    }
 }
