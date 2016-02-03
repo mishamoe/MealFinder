@@ -82,6 +82,28 @@ class MealTableViewController: UITableViewController, UITextFieldDelegate {
     
     // MARK: - Navigation
 
+    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+        if sender === saveButton {
+            guard let name = nameTextField.text where name.characters.count > 0 else {
+                return false
+            }
+            
+            guard let section = self.section where section.name!.characters.count > 0 else {
+                return false
+            }
+            
+            guard let price = priceTextField.text where (Float(price) != nil) else{
+                return false
+            }
+            
+            guard let weight = weightTextField.text where (Float(weight) != nil) else{
+                return false
+            }
+        }
+        
+        return true
+    }
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
