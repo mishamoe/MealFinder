@@ -162,8 +162,9 @@ class SectionTableViewController: UITableViewController, NSFetchedResultsControl
         
         // Text field.
         alert.addTextFieldWithConfigurationHandler { (textField: UITextField) -> Void in
-            textField.placeholder = "Section name"
             textField.clearButtonMode = .WhileEditing
+            textField.autocapitalizationType = .Sentences
+            textField.placeholder = "Section name"
         }
         
         // Actions.
@@ -191,8 +192,10 @@ class SectionTableViewController: UITableViewController, NSFetchedResultsControl
         // Text field.
         alert.addTextFieldWithConfigurationHandler { (textField: UITextField) -> Void in
             textField.clearButtonMode = .WhileEditing
+            textField.autocapitalizationType = .Sentences
             textField.placeholder = "Section name"
             textField.text = section.name
+            
         }
         
         // Actions.
