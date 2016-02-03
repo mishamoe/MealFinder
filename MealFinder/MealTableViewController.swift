@@ -33,6 +33,9 @@ class MealTableViewController: UITableViewController, UITextFieldDelegate {
         nameTextField.delegate = self
         priceTextField.delegate = self
         weightTextField.delegate = self
+        // Change keyboard type for number values
+        priceTextField.keyboardType = .NumbersAndPunctuation
+        weightTextField.keyboardType = .NumbersAndPunctuation
         
         // Set up views if editing an existing Menu.
         if let meal = self.meal {
@@ -95,11 +98,18 @@ class MealTableViewController: UITableViewController, UITextFieldDelegate {
             meal.weight = NSNumber(float: Float(weightTextField.text!)!)
             
             appDelegate.saveContext()
-        } else {
+        }
+        else {
             if segue.identifier == "SelectMealSection" {
                 let destination = segue.destinationViewController as! SectionTableViewController
                 destination.menu = menu
                 destination.section = section
+                
+                // Hide keyboard.
+                nameTextField.resignFirstResponder()
+                priceTextField.resignFirstResponder()
+                weightTextField.resignFirstResponder()
+                
                 print("SelectMealSection segue")
             }
         }
@@ -109,7 +119,7 @@ class MealTableViewController: UITableViewController, UITextFieldDelegate {
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         if textField == self.nameTextField {
-            priceTextField.becomeFirstResponder()
+            performSegueWithIdentifier("SelectMealSection", sender: nil)
         }
         else if textField == self.priceTextField {
             weightTextField.becomeFirstResponder()
