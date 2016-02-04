@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class MealTableViewController: UITableViewController, UITextFieldDelegate {
+class MealTableViewController: UITableViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     // MARK: - Properties
     
@@ -24,6 +24,8 @@ class MealTableViewController: UITableViewController, UITextFieldDelegate {
     @IBOutlet weak var ingredientsTableViewCell: UITableViewCell!
     @IBOutlet weak var priceTextField: UITextField!
     @IBOutlet weak var weightTextField: UITextField!
+    
+    @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var saveButton: UIBarButtonItem!
     
     override func viewDidLoad() {
@@ -49,6 +51,8 @@ class MealTableViewController: UITableViewController, UITextFieldDelegate {
             nameTextField.text = meal.name
             priceTextField.text = String(meal.price!)
             weightTextField.text = String(meal.weight!)
+            
+            photoImageView.image = meal.getPhotoImage()
         }
         else {
             ingredients = NSMutableSet()
@@ -78,6 +82,24 @@ class MealTableViewController: UITableViewController, UITextFieldDelegate {
             // Remove current view controler from navigation stack.
             navigationController?.popViewControllerAnimated(true)
         }
+    }
+    
+    @IBAction func selectImageFromPhotoLibrary(sender: UITapGestureRecognizer) {
+        // Hide the keyboard.
+        nameTextField.resignFirstResponder()
+        priceTextField.resignFirstResponder()
+        weightTextField.resignFirstResponder()
+        
+        // UIImagePickerController is a view controller that lets a user pick media from their photo library.
+        let imagePickerController = UIImagePickerController()
+        
+        // Only allow photos to be picked, not taken.
+        imagePickerController.sourceType = .PhotoLibrary
+        
+        // Make sure ViewController is notified when the user picks an image.
+        imagePickerController.delegate = self
+        
+        presentViewController(imagePickerController, animated: true, completion: nil)
     }
     
     @IBAction func unwindToMeal(sender: UIStoryboardSegue) {
@@ -123,6 +145,7 @@ class MealTableViewController: UITableViewController, UITextFieldDelegate {
             meal.ingredients = ingredients
             meal.price = NSNumber(float: Float(priceTextField.text!)!)
             meal.weight = NSNumber(float: Float(weightTextField.text!)!)
+            meal.setPhotoFromImage(photoImageView.image!)
             
             appDelegate.saveContext()
         }
@@ -168,6 +191,24 @@ class MealTableViewController: UITableViewController, UITextFieldDelegate {
         }
         
         return true
+    }
+    
+    // MARK: - UIImagePickerControllerDelegate
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        // Dismiss the picker if the user canceled.
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        // The info dictionary contains multiple representations of the image, and this uses the original.
+        let selectedImage = info[UIImagePickerControllerOriginalImage] as! UIImage
+        
+        // Set photoImageView to display the selected image.
+        photoImageView.image = selectedImage
+        
+        // Dismiss the picker.
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     // MARK: - Methods

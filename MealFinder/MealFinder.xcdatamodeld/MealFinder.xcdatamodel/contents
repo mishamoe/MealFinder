@@ -6,6 +6,7 @@
     </entity>
     <entity name="Meal" representedClassName=".Meal" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="photo" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="price" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="weight" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <relationship name="ingredients" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Ingredient" inverseName="meals" inverseEntity="Ingredient" syncable="YES"/>
@@ -22,7 +23,7 @@
     </entity>
     <elements>
         <element name="Ingredient" positionX="234" positionY="36" width="128" height="73"/>
-        <element name="Meal" positionX="16" positionY="-54" width="128" height="118"/>
+        <element name="Meal" positionX="16" positionY="-54" width="128" height="133"/>
         <element name="Menu" positionX="-344" positionY="-9" width="128" height="73"/>
         <element name="Section" positionX="-171" positionY="-52" width="128" height="88"/>
     </elements>
