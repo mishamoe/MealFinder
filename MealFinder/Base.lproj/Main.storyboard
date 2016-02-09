@@ -182,7 +182,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="239.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="240" placeholderIntrinsicHeight="240" image="defaultMealPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="qS1-Tb-zTF">
+                                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="240" placeholderIntrinsicHeight="240" image="DefaultMealPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="qS1-Tb-zTF">
                                                     <rect key="frame" x="188.5" y="8" width="223.5" height="223.5"/>
                                                     <gestureRecognizers/>
                                                     <constraints>
@@ -495,6 +495,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="defaultMealPhoto" width="540" height="540"/>
+        <image name="DefaultMealPhoto" width="540" height="540"/>
     </resources>
 </document>

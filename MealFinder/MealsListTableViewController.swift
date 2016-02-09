@@ -137,7 +137,25 @@ class MealsListTableViewController: UITableViewController, NSFetchedResultsContr
         self.tableView.beginUpdates()
     }
     
+    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+        print("didChangeObject: \(type.hashValue)")
+        switch type {
+        case .Insert:
+            self.tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
+        case .Delete:
+            self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+        case .Update:
+            let cell = self.tableView.cellForRowAtIndexPath(indexPath!) as! MealTableViewCell
+            self.configureCell(cell, indexPath: indexPath!)
+        case .Move:
+
+            self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+            self.tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
+        }
+    }
+    
     func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
+        print("didChangeSection: \(type.hashValue)")
         switch type {
         case .Insert:
             self.tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
@@ -145,27 +163,10 @@ class MealsListTableViewController: UITableViewController, NSFetchedResultsContr
             self.tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
         case .Update:
             self.tableView(self.tableView, titleForHeaderInSection: sectionIndex)
+            print("Update")
         case .Move:
             self.tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
             self.tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
-        }
-    }
-    
-    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
-        
-        switch type {
-        case .Insert:
-            self.tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
-        case .Delete:
-            print("delete begin")
-            self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
-            print("delete end")
-        case .Update:
-            let cell = self.tableView.cellForRowAtIndexPath(indexPath!) as! MealTableViewCell
-            self.configureCell(cell, indexPath: indexPath!)
-        case .Move:
-            self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
-            self.tableView.insertRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
         }
     }
     
