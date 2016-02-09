@@ -69,6 +69,7 @@ class MealsListTableViewController: UITableViewController, NSFetchedResultsContr
         cell.nameLabel.text = meal.name
         cell.priceLabel.text = "$\(meal.price!)"
         cell.weightLabel.text = "\(meal.weight!) g"
+        cell.photoImageView.image = meal.getPhotoImage()
     }
     
     override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {

@@ -63,35 +63,58 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Price" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L9B-cL-jBm">
                                             <rect key="frame" x="545" y="8" width="39" height="23"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weight" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jeQ-QD-frB">
                                             <rect key="frame" x="530" y="39" width="54" height="23"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3ye-Vh-5WF">
+                                            <rect key="frame" x="8" y="8" width="53.5" height="53.5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="3ye-Vh-5WF" secondAttribute="height" multiplier="1:1" id="cjU-FG-GNT"/>
+                                            </constraints>
+                                        </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rd9-C8-5N9">
-                                            <rect key="frame" x="16" y="25" width="45" height="20.5"/>
+                                            <rect key="frame" x="69.5" y="24.5" width="45" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <gestureRecognizers/>
                                     <constraints>
+                                        <constraint firstItem="3ye-Vh-5WF" firstAttribute="leading" secondItem="T5I-In-jTQ" secondAttribute="leading" constant="8" id="B1c-7n-zkb"/>
                                         <constraint firstItem="jeQ-QD-frB" firstAttribute="top" secondItem="L9B-cL-jBm" secondAttribute="bottom" constant="8" id="Gry-va-hBf"/>
                                         <constraint firstItem="jeQ-QD-frB" firstAttribute="height" secondItem="L9B-cL-jBm" secondAttribute="height" id="IJw-iq-03E"/>
                                         <constraint firstItem="rd9-C8-5N9" firstAttribute="centerY" secondItem="T5I-In-jTQ" secondAttribute="centerY" id="PVl-JC-6QI"/>
+                                        <constraint firstItem="rd9-C8-5N9" firstAttribute="leading" secondItem="3ye-Vh-5WF" secondAttribute="trailing" constant="8" id="Y4S-rU-PBD"/>
                                         <constraint firstItem="jeQ-QD-frB" firstAttribute="bottom" secondItem="T5I-In-jTQ" secondAttribute="bottomMargin" id="ens-pT-rRw"/>
+                                        <constraint firstAttribute="bottom" secondItem="3ye-Vh-5WF" secondAttribute="bottom" constant="8" id="hpJ-hl-JFe"/>
+                                        <constraint firstItem="3ye-Vh-5WF" firstAttribute="top" secondItem="T5I-In-jTQ" secondAttribute="top" constant="8" id="jsb-Ua-X2y"/>
+                                        <constraint firstItem="3ye-Vh-5WF" firstAttribute="leading" secondItem="T5I-In-jTQ" secondAttribute="leadingMargin" id="jt2-LG-E61"/>
+                                        <constraint firstItem="3ye-Vh-5WF" firstAttribute="top" secondItem="T5I-In-jTQ" secondAttribute="topMargin" id="sLF-b3-l6h"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="3ye-Vh-5WF" secondAttribute="bottom" id="ukw-Ec-oUL"/>
                                         <constraint firstItem="rd9-C8-5N9" firstAttribute="leading" secondItem="T5I-In-jTQ" secondAttribute="leadingMargin" constant="8" id="wf9-cc-HDt"/>
                                         <constraint firstItem="L9B-cL-jBm" firstAttribute="top" secondItem="T5I-In-jTQ" secondAttribute="topMargin" id="wl2-1X-IoK"/>
                                         <constraint firstItem="L9B-cL-jBm" firstAttribute="trailing" secondItem="T5I-In-jTQ" secondAttribute="trailingMargin" constant="-8" id="x7O-gm-6LP"/>
                                         <constraint firstItem="jeQ-QD-frB" firstAttribute="trailing" secondItem="T5I-In-jTQ" secondAttribute="trailingMargin" constant="-8" id="zge-fB-n3n"/>
                                     </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="jt2-LG-E61"/>
+                                            <exclude reference="sLF-b3-l6h"/>
+                                            <exclude reference="ukw-Ec-oUL"/>
+                                            <exclude reference="wf9-cc-HDt"/>
+                                        </mask>
+                                    </variation>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="nameLabel" destination="rd9-C8-5N9" id="0dp-9S-bMy"/>
+                                    <outlet property="photoImageView" destination="3ye-Vh-5WF" id="Rgb-b9-4Eu"/>
                                     <outlet property="priceLabel" destination="L9B-cL-jBm" id="6hT-Bq-DgL"/>
                                     <outlet property="weightLabel" destination="jeQ-QD-frB" id="dlg-6a-HHg"/>
                                 </connections>
@@ -149,10 +172,40 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle="Photo" id="KYm-0B-Wjd">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="240" id="715-EE-X1z">
+                                        <rect key="frame" x="0.0" y="207.5" width="600" height="240"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="715-EE-X1z" id="dSm-6a-sWh">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="239.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="240" placeholderIntrinsicHeight="240" image="defaultMealPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="qS1-Tb-zTF">
+                                                    <rect key="frame" x="188.5" y="8" width="223.5" height="223.5"/>
+                                                    <gestureRecognizers/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="qS1-Tb-zTF" secondAttribute="height" multiplier="1:1" id="vQf-0U-Mid"/>
+                                                    </constraints>
+                                                    <connections>
+                                                        <outletCollection property="gestureRecognizers" destination="Paj-lc-ubQ" appends="YES" id="BSn-D0-XsF"/>
+                                                    </connections>
+                                                </imageView>
+                                            </subviews>
+                                            <gestureRecognizers/>
+                                            <constraints>
+                                                <constraint firstItem="qS1-Tb-zTF" firstAttribute="centerX" secondItem="dSm-6a-sWh" secondAttribute="centerX" id="6dI-qH-ouu"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="qS1-Tb-zTF" secondAttribute="bottom" id="tg0-IJ-Dwt"/>
+                                                <constraint firstItem="qS1-Tb-zTF" firstAttribute="top" secondItem="dSm-6a-sWh" secondAttribute="topMargin" id="xan-qu-Jhj"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                             <tableViewSection headerTitle="Section" id="4cH-xH-Dg4">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SelectMealSection" id="RdP-oj-04Y">
-                                        <rect key="frame" x="0.0" y="207.5" width="600" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SelectMealSection" id="RdP-oj-04Y">
+                                        <rect key="frame" x="0.0" y="497.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="RdP-oj-04Y" id="wiu-i6-ryj">
                                             <rect key="frame" x="0.0" y="0.0" width="567" height="43.5"/>
@@ -164,10 +217,10 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Ingridients" id="NH0-Ye-hnF">
+                            <tableViewSection headerTitle="Ingredients" id="NH0-Ye-hnF">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SelectMealIngredients" id="BxW-ey-TN9">
-                                        <rect key="frame" x="0.0" y="301.5" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="591.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BxW-ey-TN9" id="3hb-ao-jFQ">
                                             <rect key="frame" x="0.0" y="0.0" width="567" height="43.5"/>
@@ -182,7 +235,7 @@
                             <tableViewSection headerTitle="Price" footerTitle="The price is measured in dollars" id="w5X-NP-xDo">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="pc4-ek-917">
-                                        <rect key="frame" x="0.0" y="395.5" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="685.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pc4-ek-917" id="HDP-sL-RBI">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
@@ -207,7 +260,7 @@
                             <tableViewSection headerTitle="Weight" footerTitle="The weight is measured in gramms" id="2gG-71-krw">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="4Q6-SH-KJ7">
-                                        <rect key="frame" x="0.0" y="506" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="796" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4Q6-SH-KJ7" id="DON-z2-Mjg">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
@@ -250,6 +303,7 @@
                     <connections>
                         <outlet property="ingredientsTableViewCell" destination="BxW-ey-TN9" id="db4-Xi-OLc"/>
                         <outlet property="nameTextField" destination="vBs-cc-l07" id="xBV-c4-MNK"/>
+                        <outlet property="photoImageView" destination="qS1-Tb-zTF" id="s8l-UG-54Q"/>
                         <outlet property="priceTextField" destination="bWl-6j-ife" id="wAO-l4-14k"/>
                         <outlet property="saveButton" destination="gz2-4C-jQe" id="d77-ET-QHW"/>
                         <outlet property="sectionTableViewCell" destination="RdP-oj-04Y" id="G0k-MW-Iya"/>
@@ -258,6 +312,11 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gis-PQ-2PU" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="3pf-Xv-dWN" userLabel="Exit" sceneMemberID="exit"/>
+                <tapGestureRecognizer id="Paj-lc-ubQ">
+                    <connections>
+                        <action selector="selectImageFromPhotoLibrary:" destination="eWF-jJ-gHl" id="f0B-Ig-acm"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1953" y="1830"/>
         </scene>
@@ -434,4 +493,7 @@
             <point key="canvasLocation" x="1953" y="1073"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="defaultMealPhoto" width="540" height="540"/>
+    </resources>
 </document>
